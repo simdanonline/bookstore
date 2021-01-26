@@ -40,10 +40,6 @@ const SelectedBook = ({ route, navigation }: AppNavigationProps<any>) => {
     })();
   }, []);
 
-  const onPressPreview = async (url: string) => {
-    await WebBrowser.openBrowserAsync(url);
-  };
-
   return (
     <SafeAreaView style={{ backgroundColor: Colors.pageBg, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -121,20 +117,17 @@ const SelectedBook = ({ route, navigation }: AppNavigationProps<any>) => {
           <View>
             <View>
               <View style={styles.btnContainer}>
-                <TouchableOpacity
-                  style={styles.pageBtn}
-                  onPress={() => onPressPreview(bookInfo?.pdf["Free eBook"])}
-                >
+                <TouchableOpacity style={styles.pageBtn}>
                   <Image
                     source={require("../../assets/img/Vector.png")}
                     style={styles.menuIcon}
                   />
                   <Text style={styles.btnText}>Preview</Text>
                 </TouchableOpacity>
-                <View style={styles.pageBtn}>
+                <TouchableOpacity style={styles.pageBtn}>
                   <Ionicons name="ios-chatbubble-ellipses-outline" size={22} />
                   <Text style={styles.btnText}>Reviews</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
