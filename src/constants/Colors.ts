@@ -23,5 +23,6 @@ export default {
   color1: "#06070D",
   color2: "#FDFDFD",
   color3:"#E5E0D5",
-  pageBg: "#E5E5E5"
+  pageBg: "#E5E5E5",
+  red: "#ff0000"
 };

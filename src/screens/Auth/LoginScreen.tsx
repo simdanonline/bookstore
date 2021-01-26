@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppNavigationProps } from "../../../types";
@@ -17,11 +18,15 @@ import { displayError, RFValue } from "../../Utils/Utils";
 import Colors from "../../constants/Colors";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SVG from "../../components/svg";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 // Get width of the device
 const { width, height } = Dimensions.get("window");
 
 const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
+  const { top, bottom } = useSafeAreaInsets();
+
   // state of whether to show password or hide
   const [hidePassword, setHidePassword] = React.useState(true);
 
@@ -47,7 +52,39 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
     }
   };
 
-  const { top, bottom } = useSafeAreaInsets();
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .min(7, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+  });
+
+  const {
+    values,
+    handleChange,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: () => {
+      if (
+        values.email !== "similoluwa@similoluwaodeyemi.com" ||
+        values.password !== "12345678"
+      ) {
+        return Alert.alert("Error", "Invalid email/password");
+      }
+      navigation.navigate("HomePage");
+      resetForm({});
+    },
+  });
 
   return (
     <>
@@ -93,19 +130,46 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
           <View>
             <TextInput
               placeholder="Email"
-              style={styles.input}
+              style={[
+                styles.input,
+                {
+                  borderColor:
+                    errors.email && touched.email
+                      ? Colors.red
+                      : Colors.borderColor,
+                },
+              ]}
               keyboardType="email-address"
               placeholderTextColor={Colors.color1}
               autoCapitalize={"none"}
               autoCorrect={false}
+              value={values.email}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
             />
+            {errors.email && touched.email && (
+              <Text style={{ color: Colors.red }}>{errors.email} </Text>
+            )}
           </View>
-          <View style={styles.passwordSection}>
+          <View
+            style={[
+              styles.passwordSection,
+              {
+                borderColor:
+                  errors.password && touched.password
+                    ? Colors.red
+                    : Colors.borderColor,
+              },
+            ]}
+          >
             <TextInput
               placeholder="Password"
-              style={styles.passwordInput}
+              style={[styles.passwordInput]}
               placeholderTextColor={Colors.color1}
               secureTextEntry={hidePassword}
+              value={values.password}
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
             />
             <Ionicons
               name={hidePassword ? "eye-outline" : "eye-off-outline"}
@@ -115,9 +179,13 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
               color={Colors.iconColor}
             />
           </View>
+          {errors.password && touched.password && (
+            <Text style={{ color: Colors.red }}>{errors.password} </Text>
+          )}
+          <View style={{ height: 20 }} />
           <TouchableOpacity
             style={styles.signBtn}
-            onPress={() => navigation.navigate("HomePage")}
+            onPress={() => handleSubmit()}
           >
             <Text style={styles.signInText}>Sign in</Text>
           </TouchableOpacity>
@@ -195,10 +263,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.white,
-    marginVertical: RFValue(20),
+    marginTop: RFValue(20),
     borderWidth: 1,
     borderColor: Colors.borderColor,
     borderRadius: 12,
+    marginBottom: 0,
   },
   eyeIcon: {
     padding: 10,
