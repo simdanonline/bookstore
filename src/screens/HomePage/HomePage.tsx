@@ -29,6 +29,7 @@ export interface BookType {
   authors: string;
   desc: string;
   rating: number;
+  pdf:any;
 }
 
 const { width } = Dimensions.get("window");

@@ -15,7 +15,7 @@ const BookView = ({ book, onPress, isLoading }: Props) => {
   return (
     <React.Fragment>
       <TouchableOpacity
-        style={{ flexDirection: "column" }}
+        style={{ flexDirection: "column", marginHorizontal: 10 }}
         onPress={() => onPress(book)}
       >
         <View>

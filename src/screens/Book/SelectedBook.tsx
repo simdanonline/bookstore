@@ -18,6 +18,7 @@ import bookApi from "../../api/bookApi";
 import { displayError, RFValue } from "../../Utils/Utils";
 import { BookType } from "../HomePage/HomePage";
 import LoadingView from "../../components/LoadingView";
+import * as WebBrowser from "expo-web-browser";
 
 const { width } = Dimensions.get("window");
 
@@ -38,6 +39,10 @@ const SelectedBook = ({ route, navigation }: AppNavigationProps<any>) => {
       }
     })();
   }, []);
+
+  const onPressPreview = async (url: string) => {
+    await WebBrowser.openBrowserAsync(url);
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.pageBg, flex: 1 }}>
@@ -116,13 +121,16 @@ const SelectedBook = ({ route, navigation }: AppNavigationProps<any>) => {
           <View>
             <View>
               <View style={styles.btnContainer}>
-                <View style={styles.pageBtn}>
+                <TouchableOpacity
+                  style={styles.pageBtn}
+                  onPress={() => onPressPreview(bookInfo?.pdf["Free eBook"])}
+                >
                   <Image
                     source={require("../../assets/img/Vector.png")}
                     style={styles.menuIcon}
                   />
                   <Text style={styles.btnText}>Preview</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.pageBtn}>
                   <Ionicons name="ios-chatbubble-ellipses-outline" size={22} />
                   <Text style={styles.btnText}>Reviews</Text>
