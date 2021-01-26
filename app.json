@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "bookstore_app",
+    "name": "Bookstore",
     "slug": "bookstore_app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,13 +19,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use FaceID to complete authentication"
+      },
+      "bundleIdentifier": "com.simi.bookstore",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.simdanonline.bookstore_app"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
