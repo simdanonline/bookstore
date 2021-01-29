@@ -33,6 +33,9 @@ const NewestBooks = ({ book, onPress }: Props) => {
           borderWidth: 0,
         }}
         onPress={() => onPress(book)}
+        accessible={true}
+        accessibilityLabel="This is a book"
+        accessibilityHint="Clicking this will open the details of the book"
       >
         <View style={{ width: boxSize * 0.25 }}>
           <Image source={{ uri: book.image }} style={styles.image} />
@@ -47,7 +50,7 @@ const NewestBooks = ({ book, onPress }: Props) => {
               `${book.subtitle.length > 30 ? "..." : ""}` ||
               "Sample subtitle"}{" "}
           </Text>
-          <View style={{alignSelf:"flex-start"}} >
+          <View style={{ alignSelf: "flex-start" }}>
             <AirbnbRating
               count={5}
               reviews={["Terrible", "Bad", "Meh", "OK", "Good"]}

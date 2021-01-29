@@ -1,8 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
-  Image,
-  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
@@ -130,6 +128,9 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
           <View>
             <TextInput
               placeholder="Email"
+              accessible={true}
+              accessibilityLabel="Enter your email here"
+              accessibilityHint="This is the email attached to your account"
               style={[
                 styles.input,
                 {
@@ -170,6 +171,9 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
               value={values.password}
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
+              accessible={true}
+              accessibilityLabel="Enter your password here"
+              accessibilityHint="This is the password to your account"
             />
             <Ionicons
               name={hidePassword ? "eye-outline" : "eye-off-outline"}
@@ -186,6 +190,10 @@ const LoginScreen = ({ navigation }: AppNavigationProps<any>) => {
           <TouchableOpacity
             style={styles.signBtn}
             onPress={() => handleSubmit()}
+            accessible={true}
+            accessibilityLabel="Login button"
+            accessibilityHint="This is the button to log you in"
+            accessibilityRole="button"
           >
             <Text style={styles.signInText}>Sign in</Text>
           </TouchableOpacity>

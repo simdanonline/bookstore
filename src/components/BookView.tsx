@@ -17,6 +17,9 @@ const BookView = ({ book, onPress, isLoading }: Props) => {
       <TouchableOpacity
         style={{ flexDirection: "column", marginHorizontal: 10 }}
         onPress={() => onPress(book)}
+        accessible={true}
+        accessibilityLabel="This is a book"
+        accessibilityHint="Clicking this will open the details of the book"
       >
         <View>
           <Image source={{ uri: book.image }} style={styles.image} />
